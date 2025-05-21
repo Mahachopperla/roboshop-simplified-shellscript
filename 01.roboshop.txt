@@ -1,0 +1,64 @@
+**Pre-requisites to run script that interacts with aws console**
+
+to connect to aws using cmnd line we need to install aws cli in target machine
+where we run script from github
+
+so in linux machine install aws cli (take steps from google)
+
+once installed u should configure using below cmnd
+
+$aws configure
+
+it will ask for access and secret keys and default region
+
+get those keys from aws console->IAM -> users ->create user(only for cmd login dont
+assign console login to user) ->policies(admin access)-> create user
+
+once user is created ->click on user -> create access key -> CLI -> create access key
+-> copy your access and secret keys and save it safely
+
+
+Now login to linux machine in which u want to run script to create instances
+
+there if aws cli is already installed continue to configure
+
+else
+install cli first and then configure
+
+$aws configure
+
+give requested details
+ once u provided details then
+
+$aws s3 ls -> to check connection established or not(if it doesn't give output also it's fine but it shouldn't show error)
+
+once connection established you can write script
+
+----------------------------------------------------------------------------------------------------------------------------------------
+To write scripts we should aware of manual process of what to do
+
+for roboshop what we did initially
+
+1. create 11 instances
+2. rename them
+3. update r53 record
+	if( instance is frontend )
+		update public ip to record
+	else
+		update private ip to record
+
+now we need to write script for this
+
+for creating instances what we need -> AMI ID, security group id, subnet id(optional)
+get these details from aws console
+
+to create /update dns records we need -> zone id and domain name
+get these details from route53
+
+to install instances and update dns records u will have script in google..get the code and modify as 
+u need 
+
+
+
+
+
