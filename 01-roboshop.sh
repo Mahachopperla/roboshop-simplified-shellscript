@@ -27,27 +27,26 @@ do
         echo "$instance : $IP"
         RECORD_NAME=$instance.$DOMAIN_NAME
     fi
-    aws route53 change-resource-record-sets --hosted-zone-id "$ZONE_ID" --change-batch "$(cat <<EOF
-{
-  "Comment": "Auto update DNS for $instance",
-  "Changes": [
+    aws route53 change-resource-record-sets --hosted-zone-id "$ZONE_ID" --change-batch '
     {
-      "Action": "UPSERT",
-      "ResourceRecordSet": {
-        "Name": "$RECORD_NAME",
-        "Type": "A",
-        "TTL": 1,
-        "ResourceRecords": [
-          {
-            "Value": "$IP"
-          }
-        ]
-      }
-    }
-  ]
-}
-EOF
-)"
+    "Comment": "Auto update DNS for $instance",
+    "Changes": [
+        {
+        "Action": "UPSERT",
+        "ResourceRecordSet": {
+            "Name": "$RECORD_NAME",
+            "Type": "A",
+            "TTL": 1,
+            "ResourceRecords": [
+            {
+                "Value": "$IP"
+            }
+            ]
+        }
+        }
+    ]
+    }'
+
 
 done
 
