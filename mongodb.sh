@@ -38,6 +38,7 @@ VALIDATE(){
 cp $SCRIPT_LOCATION/mongodb.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "COPYING MONGODB"
 
+echo "installing mongod-db..please wait"
 dnf install mongodb-org -y &>> $LOG_FILE
 VALIDATE $? "mongo-db installation"
 

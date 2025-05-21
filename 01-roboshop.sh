@@ -12,7 +12,7 @@ DOMAIN_NAME=robotshop.site
 # now let's write a for loop which creates any no.of instances based on list
 # provided in instances array
 
-for instance in ${INSTANCES[@]}
+for instance in $@
 do
 # search in google for script to create instances in aws cli
 #modify the script based on ur needs
