@@ -21,11 +21,33 @@ do
     if [ $instance == "frontend" ]
     then
         IP=$(aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
-        echo "$instance: $IP"
+        RECORD_NAME=$DOMAIN_NAME
     else
         IP=$(aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
         echo "$instance : $IP"
+        RECORD_NAME=$instance.$DOMAIN_NAME
     fi
+    aws route53 change-resource-record-sets --hosted-zone-id "$ZONE_ID" --change-batch "$(cat <<EOF
+    {
+    "Comment": "Auto update DNS for $instance",
+    "Changes": [
+        {
+        "Action": "UPSERT",
+        "ResourceRecordSet": {
+            "Name": "$RECORD_NAME",
+            "Type": "A",
+            "TTL": 1,
+            "ResourceRecords": [
+            {
+                "Value": "$IP"
+            }
+            ]
+        }
+        }
+    ]
+    }
+    EOF
+    )"
 
 done
 
