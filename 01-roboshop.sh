@@ -5,7 +5,7 @@
 AMI_ID=ami-09c813fb71547fc4f
 INSTANCE_TYPE=t3.micro
 SG_ID=sg-03de6c7ee76a1f5a3
-INSTANCES=("mysql" "frontend") #how many instances you need give their names here
+INSTANCES=("mongodb" "frontend" "catalogue") #how many instances you need give their names here
 ZONE_ID=Z02829133T93YRRJ2VRGM
 DOMAIN_NAME=robotshop.site
 
@@ -26,11 +26,12 @@ do
         IP=$(aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
         RECORD_NAME=$instance.$DOMAIN_NAME
     fi
+    #script to update dns created with ip's of newly created servers
     aws route53 change-resource-record-sets --hosted-zone-id "$ZONE_ID" --change-batch '{
   "Comment": "Auto update DNS for '"$instance"'",
   "Changes": [
     {
-      "Action": "UPSERT",
+      "Action": "UPSERT",                          
       "ResourceRecordSet": {
         "Name": "'"$RECORD_NAME"'",
         "Type": "A",
@@ -44,8 +45,8 @@ do
     }
   ]
 }'
-
+ # Action: upsert is to update existing values
 
 done
 
-#now let's write script to update dns records 
+ 
