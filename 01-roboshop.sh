@@ -16,7 +16,7 @@ do
 # search in google for script to create instances in aws cli
 #modify the script based on ur needs
 #here i dont want key pair, subnet etc so removed those portions and taken which is required for me
-    INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-03de6c7ee76a1f5a3 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=$instance}]' --query "Instances[*].InstanceId"--output text)
+    INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-03de6c7ee76a1f5a3 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=$instance}]' --query "Instances[*].InstanceId" --output text)
     
     if ( $instance -eq frontend )
     then
