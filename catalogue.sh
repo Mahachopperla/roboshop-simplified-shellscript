@@ -61,12 +61,11 @@ fi
 
 mkdir -p /app # creates dir if not existing if existing it skips creation without giving error
 
-cd /app
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
 rm -rf /app/*
 cd /app
-unzip /tmp/catalogue.zip > /app
+unzip /tmp/catalogue.zip 
 npm install 
 VALIDATE $? "build tool installed packages"
 
@@ -76,13 +75,22 @@ VALIDATE $? "systemctl service file copying"
 systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
+VALIDATE $? "validating and running service"
 
 cp $SCRIPT_LOCATION/mongodb.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y 
 VALIDATE $? "installation of mongo client "
 
-mongosh --host mongodb.robotshop.site </app/db/master-data.js
+
+
+DB_EXISTS=$(mongosh --quiet --host mongodb.daws84s.site --eval "db.adminCommand('listDatabases').databases.map(db => db.name).includes('catalogue')")
+if [ "$DB_EXISTS" == "true" ]; then
+    mongosh --host mongodb.daws84s.site </app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "Loading data into MongoDB"
+else
+    echo -e "Data is already loaded ... $Y SKIPPING $N"
+fi
 
 
 
