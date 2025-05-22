@@ -85,7 +85,8 @@ VALIDATE $? "installation of mongo client "
 
 
 DB_EXISTS=$(mongosh --quiet --host mongodb.robotshop.site --eval "db.adminCommand('listDatabases').databases.map(db => db.name).includes('catalogue')")
-if [ "$DB_EXISTS" == "true" ]; then
+if [ "$DB_EXISTS" == "false" ]
+then
     mongosh --host mongodb.robotshop.site </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading data into MongoDB"
 else
