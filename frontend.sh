@@ -38,21 +38,21 @@ dnf list installed nginx &>> $LOG_FILE
 
 if [ $? -ne 0 ]  
 then
-    echo -e "$Y installing Nginx.......$N" | tee -a $LOG_FILE
-    dnf module disable Nginx -y &>> $LOG_FILE
-    dnf module enable Nginx:1.24 -y &>> $LOG_FILE
-    VALIDATE $? "enabling Nginx:1.24"
+    echo -e "$Y installing nginx.......$N" | tee -a $LOG_FILE
+    dnf module disable nginx -y &>> $LOG_FILE
+    dnf module enable nginx:1.24 -y &>> $LOG_FILE
+    VALIDATE $? "enabling nginx:1.24"
 
-    dnf install Nginx -y &>> $LOG_FILE
-    VALIDATE $? "installation of Nginx"  
+    dnf install nginx -y &>> $LOG_FILE
+    VALIDATE $? "installation of nginx"  
 
 else
-    echo -e "$G Nginx is already installed... nothing to do$N" | tee -a $LOG_FILE
+    echo -e "$G nginx is already installed... nothing to do$N" | tee -a $LOG_FILE
 fi
 
 systemctl enable nginx &>> $LOG_FILE
 systemctl start nginx &>> $LOG_FILE
-VALIDATE $? "started Nginx service"
+VALIDATE $? "started nginx service"
 
 rm -rf /usr/share/nginx/html/* 
 
