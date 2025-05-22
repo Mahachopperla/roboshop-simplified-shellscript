@@ -14,7 +14,7 @@ LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
 mkdir -p $LOG_FOLDER
 SCRIPT_LOCATION=$PWD
 
-echo "This script is getting executed at : $(date)" &>> $LOG_FILE 
+echo "This script is getting executed at : $(date)" | tee -a $LOG_FILE 
 USERID=$(id -u)  #user id of root user will be 0
 
 if [ $USERID -ne 0 ]
@@ -50,7 +50,7 @@ else
     echo -e "$G Nodejs is already installed... nothing to do$N" | tee -a $LOG_FILE
 fi
 
-id username &>> $LOG_FILE
+id roboshop &>> $LOG_FILE
 if [ $? -ne 0 ]
 then
     echo " user not there proceeding to create "
@@ -62,11 +62,11 @@ fi
 mkdir -p /app # creates dir if not existing if existing it skips creation without giving error
 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 rm -rf /app/*
 cd /app
-unzip /tmp/catalogue.zip 
-npm install 
+unzip /tmp/catalogue.zip &>> $LOG_FILE
+npm install &>> $LOG_FILE
 VALIDATE $? "build tool installed packages"
 
 cp $SCRIPT_LOCATION/catalogue.service /etc/systemd/system/catalogue.service
@@ -79,7 +79,7 @@ VALIDATE $? "validating and running service"
 
 cp $SCRIPT_LOCATION/mongodb.repo /etc/yum.repos.d/mongo.repo
 
-dnf install mongodb-mongosh -y 
+dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "installation of mongo client "
 
 
