@@ -1,3 +1,7 @@
+#to execute script we'll connect to mongodb server first and clone repo(roboshop-shell script)
+#under this repo only u will have mongodb.repo file so u can copy it to location which u want
+
+
 [mongodb-org-7.0]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/9/mongodb-org/7.0/x86_64/
