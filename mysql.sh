@@ -42,10 +42,7 @@ systemctl start mysqld
 
 VALIDATE $? "mysqld service started successfully"
 
-if mysqladmin -u root status &>/dev/null; then
-    echo "password has already been set"
-else
-    mysql_secure_installation --set-root-pass RoboShop@1
-    VALIDATE $? "root password set"
-fi
+mysql_secure_installation --set-root-pass RoboShop@1
+VALIDATE $? "setting root pass"
+
 
