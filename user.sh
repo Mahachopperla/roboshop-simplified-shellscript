@@ -78,10 +78,10 @@ VALIDATE $? "copying user service"
 systemctl daemon-reload 
 VALIDATE $? "daemon-reload"
 
-systemctl enable cart 
+systemctl enable user 
 VALIDATE $? "enabling user"
 
-systemctl start cart
+systemctl start user
 VALIDATE $? "starting user.service"
 
 
