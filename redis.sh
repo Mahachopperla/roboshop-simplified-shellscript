@@ -40,7 +40,7 @@ dnf module enable redis:7 -y &>> $LOG_FILE
 VALIDATE $? "enabling redis package"
 
 dnf install redis -y &>> $LOG_FILE
-VALIDATE $? "enabling redis package"
+VALIDATE $? "installtion of redis package"
 
 sed -s 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOG_FILE
 
