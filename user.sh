@@ -64,7 +64,9 @@ mkdir -p /app # creates dir if not existing if existing it skips creation withou
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>> $LOG_FILE
 VALIDATE $? "copying application code"
 
+rm -rf /app/*
 cd /app &>> $LOG_FILE 
+
 unzip /tmp/user.zip &>> $LOG_FILE
 
 cd /app 
