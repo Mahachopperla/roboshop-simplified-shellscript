@@ -53,3 +53,6 @@ systemctl enable redis &>> $LOG_FILE
 systemctl start redis &>> $LOG_FILE
 
 VALIDATE $? "redis service start"
+
+systemctl restart redis &>> $LOG_FILE
+VALIDATE $? "redis service restarted"
