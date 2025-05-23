@@ -40,14 +40,15 @@ dnf module enable redis:7 -y &>> $LOG_FILE
 VALIDATE $? "enabling redis package"
 
 dnf install redis -y &>> $LOG_FILE
+VALIDATE $? "enabling redis package"
 
 sed -s 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOG_FILE
 
-VALIDATE $? "updated accepted hosts ip"
+VALIDATE $? "updation of accepted hosts ip"
 
 sed -s 's/"protection-mode yes"/"protection-mode no"/g' /etc/redis/redis.conf &>> $LOG_FILE
 
-VALIDATE $? "updated protection-mode"
+VALIDATE $? "updation of protection-mode"
 
 systemctl enable redis &>> $LOG_FILE
 systemctl start redis &>> $LOG_FILE
