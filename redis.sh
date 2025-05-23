@@ -46,7 +46,7 @@ VALIDATE $? "installtion of redis package"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "updation of accepted hosts ip"
 
-sed -i 's/"protected-mode yes"/"protected-mode no"/g' /etc/redis/redis.conf &>> $LOG_FILE
+sudo sed -ri 's#^(protected-mode)[[:space:]]+yes#\1 no#' /etc/redis/redis.conf &>> $LOG_FILE
 VALIDATE $? "updation of protection-mode"
 
 systemctl enable redis &>> $LOG_FILE
