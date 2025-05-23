@@ -42,11 +42,13 @@ VALIDATE $? "enabling redis package"
 dnf install redis -y &>> $LOG_FILE
 VALIDATE $? "installtion of redis package"
 
-sed -s 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOG_FILE
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+
 
 VALIDATE $? "updation of accepted hosts ip"
 
-sed -s 's/"protection-mode yes"/"protection-mode no"/g' /etc/redis/redis.conf &>> $LOG_FILE
+sed -i 's/"protection-mode yes"/"protection-mode no"/g' /etc/redis/redis.conf &>> $LOG_FILE
 
 VALIDATE $? "updation of protection-mode"
 
