@@ -52,12 +52,13 @@ mkdir -p /app
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>> $LOG_FILE
 VALIDATE $? "downloading application code"
 
+rm -rf /app/* &>> $LOG_FILE
 cd /app 
 unzip /tmp/shipping.zip &>> $LOG_FILE
 
 VALIDATE $? "unzipping app files"
 
-rm -rf /app/* &>> $LOG_FILE
+
 cd /app 
 mvn clean package &>> $LOG_FILE
 mv target/shipping-1.0.jar shipping.jar &>> $LOG_FILE
