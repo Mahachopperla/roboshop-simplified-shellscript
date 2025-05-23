@@ -62,6 +62,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>> $LOG_FILE
 VALIDATE $? "frontend app file copying "
 
+
 cp $SCRIPT_LOCATION/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? " nginx.conf file updation"
 
