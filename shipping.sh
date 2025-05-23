@@ -13,6 +13,7 @@ FILE_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
 mkdir -p $LOG_FOLDER
 SCRIPT_LOCATION=$PWD
+MYSQL_ROOT_PASSWORD=RoboShop@1
 
 echo "This script is getting executed at : $(date)" | tee -a $LOG_FILE 
 USERID=$(id -u)  #user id of root user will be 0
@@ -34,16 +35,44 @@ VALIDATE(){
     fi
 }
 
-dnf install mysql-server -y &>> $LOG_FILE
-VALIDATE $? "installation of mysql"
+dnf install maven -y &>> $LOG_FILE
+VALIDATE $? "maven installation"
 
-systemctl enable mysqld
-systemctl start mysqld 
+id roboshop &>> $LOG_FILE
+if [ $? -ne 0 ]
+then
+    echo " user not there proceeding to create "
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+else
+    echo " user already existing so skipping user creation"
+fi
 
-VALIDATE $? "mysqld service started successfully"
+mkdir -p /app
 
-mysql_secure_installation --set-root-pass RoboShop@1
-VALIDATE $? "setting root pass"
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>> $LOG_FILE
+VALIDATE $? "downloading application code"
+
+cd /app 
+unzip /tmp/shipping.zip &>> $LOG_FILE
+
+VALIDATE $? "unzipping app files"
+
+rm -rf /app/* &>> $LOG_FILE
+cd /app 
+mvn clean package &>> $LOG_FILE
+mv target/shipping-1.0.jar shipping.jar &>> $LOG_FILE
+
+VALIDATE $? "installing dependencies"
+
+cp $SCRIPT_LOCATION/shipping.service /etc/systemd/system/shipping.service
+VALIDATE $? "service file copy"
+
+systemctl daemon-reload &>> $LOG_FILE
+
+systemctl enable shipping &>> $LOG_FILE
+VALIDATE $? "service enabled"
+systemctl start shipping &>> $LOG_FILE
+VALIDATE $? "service started"
 
 dnf install mysql -y &>> $LOG_FILE
 VALIDATE $? "mysql client isntallation"
