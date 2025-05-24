@@ -44,12 +44,9 @@ systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 VALIDATE $? "starting of rabbitmq"
 
-id roboshop &>> $LOG_FILE
-if [ $? -ne 0 ]
-then
-    echo " user not there proceeding to create "
-    rabbitmqctl add_user roboshop roboshop123
-    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
-else
-    echo " user already existing so skipping user creation"
-fi
+
+rabbitmqctl add_user roboshop roboshop123
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+VALIDATE $? "user created successfully"
+
+    
