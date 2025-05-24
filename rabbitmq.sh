@@ -44,7 +44,7 @@ systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 VALIDATE $? "starting of rabbitmq"
 
-id roboshop | tee -a $LOG_FILE
+id roboshop &>> $LOG_FILE
 if [ $? -ne 0 ]
 then
     echo " user not there proceeding to create "
