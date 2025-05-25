@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-
+START_TIME=$(date +%s)
 LOG_FOLDER="/var/log/roboshop-shellpractice" 
 FILE_NAME=$(echo $0 | cut -d "." -f1) 
 LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
@@ -45,19 +45,6 @@ VALIDATE $? "mysqld service started successfully"
 mysql_secure_installation --set-root-pass RoboShop@1
 VALIDATE $? "setting root pass"
 
-dnf install mysql -y &>> $LOG_FILE
-VALIDATE $? "mysql client isntallation"
-
-mysql -h mysql.robotshop.site -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
-if [ $? -ne 0 ]
-then
-    mysql -h mysql.robotshop.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
-    mysql -h mysql.robotshop.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql  &>>$LOG_FILE
-    mysql -h mysql.robotshop.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
-    VALIDATE $? "Loading data into MySQL"
-else
-    echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
-fi
-
-systemctl restart shipping &>>$LOG_FILE
-VALIDATE $? "Restart shipping"
+END_TIME=$(date +%s)
+TIME_TAKEN=$($END_TIME-$START_TIME)
+echo "time taken to execute script is $TIME_TAKEN"

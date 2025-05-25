@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-
+START_TIME=$(date +%s)
 LOG_FOLDER="/var/log/roboshop-shellpractice" 
 FILE_NAME=$(echo $0 | cut -d "." -f1) 
 LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
@@ -49,3 +49,6 @@ VALIDATE $? "enabling and staring mongo-db service"
 sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf
 VALIDATE $? "updating mongodb.conf file"
 
+END_TIME=$(date +%s)
+TIME_TAKEN=$($END_TIME-$START_TIME)
+echo "time taken to execute script is $TIME_TAKEN"
