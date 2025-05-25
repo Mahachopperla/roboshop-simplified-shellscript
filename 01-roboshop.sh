@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #let's create variables AMI ID, SG ID, instances array
-
+START_TIME=$(date +%s)
 AMI_ID=ami-09c813fb71547fc4f
 INSTANCE_TYPE=t3.micro
 SG_ID=sg-03de6c7ee76a1f5a3
@@ -50,3 +50,6 @@ do
 done
 
  
+END_TIME=$(date +%s)
+TIME_TAKEN=$($END_TIME-$START_TIME)
+echo "time taken to execute script is $TIME_TAKEN"
