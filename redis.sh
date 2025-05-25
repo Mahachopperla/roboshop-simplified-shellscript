@@ -3,7 +3,7 @@
 #few lines of code is common in all components(colr setting, log-file creation to store logs,checking user using root access or not)
 . ./common.sh
 
-
+APP_NAME=redis
 CHECK_ROOT
 
 #whatever location we are currently in, we need to copy mongodb.repo script from roboshop-shell-script dir so in starting of script only we are assigning it's value to script location variable
