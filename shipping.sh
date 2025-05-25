@@ -33,3 +33,5 @@ systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restart shipping"
 
 TIME_TAKEN
+
+#give shipping dns name in forntend nginx conf

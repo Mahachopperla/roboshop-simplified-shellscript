@@ -22,6 +22,6 @@ SYSTEMD_SETUP
 
 TIME_TAKEN
 
-
+#give payment dns name in forntend nginx conf
 
 
