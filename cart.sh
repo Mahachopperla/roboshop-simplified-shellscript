@@ -18,4 +18,4 @@ SYSTEMD_SETUP
 
 TIME_TAKEN
 
-#make sure to update user dns in nginx conf file of frontend
+#make sure to update cart dns in nginx conf file of frontend

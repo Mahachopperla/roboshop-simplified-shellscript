@@ -11,6 +11,7 @@ FILE_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
 mkdir -p $LOG_FOLDER
 SCRIPT_LOCATION=$PWD
+MYSQL_ROOT_PASSWORD=RoboShop@1
 
 echo "This script is getting executed at : $(date)" | tee -a $LOG_FILE 
 
@@ -95,4 +96,25 @@ TIME_TAKEN(){
     END_TIME=$(date +%s)
     TIME_TAKEN=$(($END_TIME - $START_TIME))
     echo "time taken to execute script is $TIME_TAKEN"
+}
+
+MAVEN_SETUP(){
+
+    dnf install maven -y &>> $LOG_FILE
+    VALIDATE $? "maven installation"
+
+   
+    mvn clean package &>> $LOG_FILE
+    mv target/shipping-1.0.jar shipping.jar &>> $LOG_FILE
+
+    VALIDATE $? "installing dependencies"
+
+}
+
+PYTHON_SETUP(){
+    dnf install python3 gcc python3-devel -y &>> $LOG_FILE
+    VALIDATE $? "installation of python"
+    pip3 install -r requirements.txt &>> $LOG_FILE
+    VALIDATE $? "dependencies installation"
+
 }
