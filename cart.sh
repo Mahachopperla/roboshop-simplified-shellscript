@@ -17,3 +17,5 @@ APP_NAME=cart
 SYSTEMD_SETUP
 
 TIME_TAKEN
+
+#make sure to update user dns in nginx conf file of frontend
