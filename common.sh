@@ -74,6 +74,7 @@ APP_SETUP(){
     rm -rf /app/*
     cd /app
     unzip /tmp/$APP_NAME.zip &>> $LOG_FILE
+    echo "App setup is completed"
 }
 
 SYSTEMD_SETUP(){
