@@ -93,5 +93,5 @@ systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restart shipping"
 
 END_TIME=$(date +%s)
-TIME_TAKEN=$($END_TIME-$START_TIME)
+TIME_TAKEN=$(($END_TIME - $START_TIME))
 echo "time taken to execute script is $TIME_TAKEN"

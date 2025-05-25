@@ -50,5 +50,5 @@ sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf
 VALIDATE $? "updating mongodb.conf file"
 
 END_TIME=$(date +%s)
-TIME_TAKEN=$($END_TIME-$START_TIME)
+TIME_TAKEN=$(($END_TIME - $START_TIME))
 echo "time taken to execute script is $TIME_TAKEN"

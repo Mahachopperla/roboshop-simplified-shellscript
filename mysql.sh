@@ -46,5 +46,5 @@ mysql_secure_installation --set-root-pass RoboShop@1
 VALIDATE $? "setting root pass"
 
 END_TIME=$(date +%s)
-TIME_TAKEN=$($END_TIME-$START_TIME)
+TIME_TAKEN=$(($END_TIME - $START_TIME))
 echo "time taken to execute script is $TIME_TAKEN"
