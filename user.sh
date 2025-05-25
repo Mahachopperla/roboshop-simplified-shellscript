@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-
+START_TIME=$(date +%s)
 LOG_FOLDER="/var/log/roboshop-shellpractice" 
 FILE_NAME=$(echo $0 | cut -d "." -f1) 
 LOG_FILE="$LOG_FOLDER/$FILE_NAME.log"
@@ -86,5 +86,7 @@ VALIDATE $? "enabling user"
 systemctl start user
 VALIDATE $? "starting user.service"
 
-
+END_TIME=$(date +%s)
+TIME_TAKEN=$($END_TIME-$START_TIME)
+echo "time taken to execute script is $TIME_TAKEN"
 
