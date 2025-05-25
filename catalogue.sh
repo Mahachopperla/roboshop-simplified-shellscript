@@ -6,6 +6,12 @@
 APP_NAME=catalogue
 CHECK_ROOT
 USER_SETUP
+#make sure u call app setup first and nodejs setup next
+#cause build tool is application specific it is diiferent for each application 
+#for nodejs it is npm, for java it is maven and python pip etc
+#so even though bild files need to be executed in app-setup we are writing build tool execution in that specific application installation process
+#manam first nodejs run chesthye manam npm install ani call cheshety dhantlo dependencies inka load avaledhu
+#manam depencies app lo load chesi then npm install ni call cheyali
 APP_SETUP
 NODEJS_SETUP
 SYSTEMD_SETUP
